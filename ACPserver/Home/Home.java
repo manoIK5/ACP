@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import coinsCount.CoinCount;
 import customers.CustomerList;
+import employees.EmployeesList;
 import login.Login;
 
 import javax.swing.JButton;
@@ -79,7 +80,7 @@ public class Home {
 				cusFrame.frmCustomerList.setVisible(true);
 				frmHome.setVisible(false);
 			}
-		});
+		}); 
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnNewButton.setBounds(23, 32, 203, 55);
 		panel.add(btnNewButton);
@@ -107,5 +108,17 @@ public class Home {
 		btnCoinsCount.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnCoinsCount.setBounds(23, 142, 203, 55);
 		panel.add(btnCoinsCount);
+		
+		JButton btnManageEmployees = new JButton("Manage Employees");
+		btnManageEmployees.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmHome.setVisible(false);
+				EmployeesList object = new EmployeesList();
+				object.frmEmployeesList.setVisible(true);
+			}
+		});
+		btnManageEmployees.setFont(new Font("Tahoma", Font.BOLD, 21));
+		btnManageEmployees.setBounds(598, 32, 258, 55);
+		panel.add(btnManageEmployees);
 	}
 }

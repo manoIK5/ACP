@@ -14,18 +14,27 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import Home.Home;
+import databaseCon.DatabaseCon;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class CoinCount {
 
 	public JFrame frmCoinCount;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField machineNumInput;
+	private JTextField InAmountInput;
+	private JTextField outAmountInput;
+	
+	static Connection con;
+	static PreparedStatement stmt;
+	static ResultSet rs; 
 
 	/**
 	 * Launch the application.
@@ -47,6 +56,7 @@ public class CoinCount {
 	 * Create the application.
 	 */
 	public CoinCount() {
+		con = DatabaseCon.connection();
 		initialize();
 	}
 
@@ -95,11 +105,11 @@ public class CoinCount {
 		lblMachineNumber.setBounds(36, 136, 195, 58);
 		panel.add(lblMachineNumber);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.BOLD, 21));
-		textField.setBounds(232, 136, 158, 47);
-		panel.add(textField);
-		textField.setColumns(10);
+		machineNumInput = new JTextField();
+		machineNumInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		machineNumInput.setBounds(232, 136, 158, 47);
+		panel.add(machineNumInput);
+		machineNumInput.setColumns(10);
 		
 		JLabel lblInAmount = new JLabel("In Amount:");
 		lblInAmount.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -111,19 +121,57 @@ public class CoinCount {
 		lblOutAmount.setBounds(36, 359, 195, 58);
 		panel.add(lblOutAmount);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.BOLD, 21));
-		textField_1.setColumns(10);
-		textField_1.setBounds(232, 255, 158, 47);
-		panel.add(textField_1);
+		InAmountInput = new JTextField();
+		InAmountInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		InAmountInput.setColumns(10);
+		InAmountInput.setBounds(232, 255, 158, 47);
+		panel.add(InAmountInput);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.BOLD, 21));
-		textField_2.setColumns(10);
-		textField_2.setBounds(232, 359, 158, 47);
-		panel.add(textField_2);
+		outAmountInput = new JTextField();
+		outAmountInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		outAmountInput.setColumns(10);
+		outAmountInput.setBounds(232, 359, 158, 47);
+		panel.add(outAmountInput);
 		
 		JButton btnNewButton = new JButton("Submit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Double inAmount;
+				Double outAmount;
+				 
+				try {
+					stmt = con.prepareStatement("INSERT INTO `coincount`(`AM/PM`, `Machine-num`, `InAmount`, `OutAmount`) VALUES (?, ?, ?, ?)");
+					stmt.setString(1, (String) comboBox.getSelectedItem());
+					stmt.setInt(2, Integer.parseInt(machineNumInput.getText()));
+					
+					
+					if (InAmountInput.getText().equals("")) {
+						inAmount = 0.00;
+					} else {
+						inAmount = Double.parseDouble(InAmountInput.getText());
+					}
+					
+					if (outAmountInput.getText().equals("")) {
+						outAmount = 0.00;
+					} else {
+						outAmount = Double.parseDouble(outAmountInput.getText());
+					}
+					
+					stmt.setDouble(3, inAmount);
+					stmt.setDouble(4, outAmount);
+					
+//					Inserting the data
+					stmt.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Data insertion is succesful");
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnNewButton.setIcon(new ImageIcon(CoinCount.class.getResource("/icons8-login-48.png")));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnNewButton.setBounds(36, 451, 251, 58);

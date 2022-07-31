@@ -13,7 +13,7 @@ public class DatabaseCon {
 		connection();
 	}
     
-	public static Connection connection() {
+	public static Connection connection() { 
 		
 		try {
 			Class.forName(JDBC_DRIVER);

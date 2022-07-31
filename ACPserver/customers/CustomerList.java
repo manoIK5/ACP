@@ -122,7 +122,7 @@ public class CustomerList {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
+			new String[] { 
 				"Customer ID", "Name", "Last Name ", "Phone Number"
 			}
 		) {
@@ -173,7 +173,7 @@ public class CustomerList {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
 				int id = (int) table.getValueAt(row, 0);
-				
+				 
 				try {
 					stmt = con.prepareStatement("DELETE FROM customer WHERE `Customer Id` =?");
 					stmt.setInt(1, id);

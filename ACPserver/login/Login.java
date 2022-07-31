@@ -92,7 +92,7 @@ public class Login {
 				String password = InputPassword.getText();
 				
 				InputUsername.setText("");
-				InputPassword.setText("");
+				InputPassword.setText(""); 
 				
 			try {
 					stmt = con.prepareStatement("SELECT `Employee-id` FROM employees WHERE username = ? && password = ?");

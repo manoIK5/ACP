@@ -58,7 +58,7 @@ public class AddCustomer {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame. 
 	 */
 	private void initialize() {
 		frmAddCustomer = new JFrame();
@@ -131,7 +131,7 @@ public class AddCustomer {
 //					Closing the frame and opening the new one
 					frmAddCustomer.setVisible(false);
 					CustomerList cuslist = new CustomerList();
-					cuslist.frmCustomerList.setVisible(true);
+					cuslist.frmCustomerList.setVisible(true); 
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
