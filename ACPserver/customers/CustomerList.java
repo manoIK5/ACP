@@ -35,6 +35,7 @@ public class CustomerList {
 	static Connection con;
 	static PreparedStatement stmt;
 	static ResultSet rs; 
+	
 	private JButton btnNewButton;
 	private JButton btnBack;
 	private JButton btnDelete;
@@ -118,6 +119,7 @@ public class CustomerList {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		table.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {

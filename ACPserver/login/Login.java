@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -25,7 +27,7 @@ public class Login {
 	private JPasswordField InputPassword;
 	
 	static Connection con;
-	static PreparedStatement stmt;
+	static PreparedStatement stmt;   
 	static ResultSet rs; 
 	
 	public static String emploeeId;
@@ -144,7 +146,7 @@ public class Login {
 		frmLogin.getContentPane().add(InputUsername);
 		InputUsername.setColumns(10);
 		
-		JLabel lblUsername = new JLabel("User name:");
+		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblUsername.setBounds(42, 167, 248, 38);
 		frmLogin.getContentPane().add(lblUsername);
@@ -158,6 +160,15 @@ public class Login {
 		InputPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		InputPassword.setBounds(42, 310, 248, 40);
 		frmLogin.getContentPane().add(InputPassword);
+		
+		// ads the enter key event listener
+		InputPassword.addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent e) {
+			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+			    	btnLogin.doClick();
+			    }};		
+		});
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(Login.class.getResource("/iconfinder_Paul-17_2624626.png")));

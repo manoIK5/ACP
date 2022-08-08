@@ -135,7 +135,7 @@ public class CoinCount {
 		
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { 
 				
 				Double inAmount;
 				Double outAmount;

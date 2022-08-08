@@ -122,6 +122,7 @@ public class EmployeesList {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
