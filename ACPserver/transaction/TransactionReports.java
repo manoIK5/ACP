@@ -21,6 +21,8 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class TransactionReports {
 
@@ -29,6 +31,7 @@ public class TransactionReports {
 	static Connection con;
 	static PreparedStatement stmt;
 	public static ResultSet rs;
+	private JTextField cusNameInput;
 
 	/**
 	 * Launch the application.
@@ -85,17 +88,33 @@ public class TransactionReports {
 		JButton btnNewButton = new JButton("Today");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 0 day) and curdate()");
-					rs = stmt.executeQuery();
-					
-					frmTransactionReports.setVisible(false);
-					ShowTransactionReports object = new ShowTransactionReports();
-					object.frmTransactionReports.setVisible(true);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(cusNameInput.getText().equals("")) {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 0 day) and curdate()");
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 0 day) and curdate() && `CustomerName` = ?");
+						stmt.setString(1, cusNameInput.getText());
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -105,18 +124,36 @@ public class TransactionReports {
 		JButton btnNewButton_1 = new JButton("This year\r\n");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 year) and curdate()");
-					rs = stmt.executeQuery();
-					
-					frmTransactionReports.setVisible(false);
-					ShowTransactionReports object = new ShowTransactionReports();
-					object.frmTransactionReports.setVisible(true);
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				if(cusNameInput.getText().equals("")) {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 year) and curdate()");
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 year) and curdate() && `CustomerName` = ?");
+						stmt.setString(1, cusNameInput.getText());
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -126,18 +163,36 @@ public class TransactionReports {
 		JButton btnNewButton_2 = new JButton("This week");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 7 day) and curdate()");
-					rs = stmt.executeQuery();
-					
-					frmTransactionReports.setVisible(false);
-					ShowTransactionReports object = new ShowTransactionReports();
-					object.frmTransactionReports.setVisible(true);
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				if(cusNameInput.getText().equals("")) {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 7 day) and curdate()");
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 7 day) and curdate() && `CustomerName` = ?");
+						stmt.setString(1, cusNameInput.getText());
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+
 			}
 		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -147,18 +202,38 @@ public class TransactionReports {
 		JButton btnNewButton_3 = new JButton("This Month");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 month) and curdate()");
-					rs = stmt.executeQuery();
-					
-					frmTransactionReports.setVisible(false);
-					ShowTransactionReports object = new ShowTransactionReports();
-					object.frmTransactionReports.setVisible(true);
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				if(cusNameInput.getText().equals("")) {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 month) and curdate()");
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `Date` between date_sub(curdate(),interval 1 month) and curdate() && `CustomerName` = ?");
+						stmt.setString(1, cusNameInput.getText());
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+				
+				
+				
 			}
 		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -168,18 +243,36 @@ public class TransactionReports {
 		JButton btnNewButton_4 = new JButton("All Data");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE 1");
-					rs = stmt.executeQuery();
-					
-					frmTransactionReports.setVisible(false);
-					ShowTransactionReports object = new ShowTransactionReports();
-					object.frmTransactionReports.setVisible(true);
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				if(cusNameInput.getText().equals("")) {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE 1");
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = con.prepareStatement("SELECT * FROM `transaction` WHERE `CustomerName` = ?");
+						stmt.setString(1, cusNameInput.getText());
+						rs = stmt.executeQuery();
+						
+						frmTransactionReports.setVisible(false);
+						ShowTransactionReports object = new ShowTransactionReports();
+						object.frmTransactionReports.setVisible(true);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+		
 			}
 		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -198,6 +291,16 @@ public class TransactionReports {
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnBack.setBounds(658, 474, 216, 76);
 		panel.add(btnBack);
+		
+		cusNameInput = new JTextField();
+		cusNameInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		cusNameInput.setBounds(40, 448, 269, 62);
+		panel.add(cusNameInput);
+		cusNameInput.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Customer Name:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 21));
+		lblNewLabel.setBounds(40, 395, 193, 42);
+		panel.add(lblNewLabel);
 	}
-
 }

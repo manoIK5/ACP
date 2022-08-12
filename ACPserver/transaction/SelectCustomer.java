@@ -185,11 +185,11 @@ public class SelectCustomer {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// getting the id number
-				int row = table.getSelectedRow(); 
-				int id = (int) table.getValueAt(row, 0);
+//				int row = table.getSelectedRow(); 
+//				int id = (int) table.getValueAt(row, 0);
 				
 //				setting the public variable of the transaction frame to the above received variable and closing the frame
-				Transaction.cusID = id;
+//				Transaction.cusID = id;
 				frmSelectCustomer.setVisible(false);
 			}
 		});

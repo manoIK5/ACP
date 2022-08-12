@@ -66,10 +66,9 @@ public class CoinCountReport {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frmCoinCountReport = new JFrame();
-		frmCoinCountReport.setResizable(false);
 		frmCoinCountReport.setIconImage(Toolkit.getDefaultToolkit().getImage(CoinCountReport.class.getResource("/chip.png")));
 		frmCoinCountReport.setTitle("Coin Count Report");
-		frmCoinCountReport.setBounds(100, 100, 900, 600);
+		frmCoinCountReport.setBounds(100, 100, 1280, 600);
 		frmCoinCountReport.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmCoinCountReport.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -85,7 +84,7 @@ public class CoinCountReport {
 		frmCoinCountReport.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 900, 600);
+		panel.setBounds(0, 0, 1315, 600);
 		frmCoinCountReport.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -101,7 +100,7 @@ public class CoinCountReport {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnNewButton.setBounds(10, 74, 176, 52);
+		btnNewButton.setBounds(10, 74, 276, 52);
 		panel.add(btnNewButton);
 		
 		JButton btnThisWeek = new JButton("This Week:");
@@ -111,7 +110,7 @@ public class CoinCountReport {
 			}
 		});
 		btnThisWeek.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnThisWeek.setBounds(262, 74, 176, 52);
+		btnThisWeek.setBounds(385, 74, 276, 52);
 		panel.add(btnThisWeek);
 		
 		JButton btnThisMonth = new JButton("This Month:");
@@ -121,7 +120,7 @@ public class CoinCountReport {
 			}
 		});
 		btnThisMonth.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnThisMonth.setBounds(482, 74, 176, 52);
+		btnThisMonth.setBounds(790, 74, 278, 52);
 		panel.add(btnThisMonth);
 		
 		JButton btnThisYear = new JButton("This Year:");
@@ -131,7 +130,7 @@ public class CoinCountReport {
 			}
 		});
 		btnThisYear.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnThisYear.setBounds(10, 166, 176, 52);
+		btnThisYear.setBounds(178, 166, 276, 52);
 		panel.add(btnThisYear);
 		
 		JButton btnAllData = new JButton("All Data:");
@@ -141,18 +140,18 @@ public class CoinCountReport {
 			}
 		});
 		btnAllData.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnAllData.setBounds(262, 166, 176, 52);
+		btnAllData.setBounds(577, 166, 276, 52);
 		panel.add(btnAllData);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"All", "AM", "PM"}));
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 21));
-		comboBox.setBounds(381, 267, 113, 46);
+		comboBox.setBounds(409, 267, 113, 46);
 		panel.add(comboBox);
 		
 		machNumInput = new JTextField();
 		machNumInput.setFont(new Font("Tahoma", Font.BOLD, 21));
-		machNumInput.setBounds(512, 353, 247, 52);
+		machNumInput.setBounds(512, 353, 307, 52);
 		panel.add(machNumInput);
 		machNumInput.setColumns(10);
 		
@@ -256,7 +255,7 @@ public class CoinCountReport {
 		});
 		btnBack.setIcon(new ImageIcon(CoinCountReport.class.getResource("/back.png")));
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnBack.setBounds(666, 457, 187, 65);
+		btnBack.setBounds(223, 457, 187, 65);
 		panel.add(btnBack);
 	}
 }

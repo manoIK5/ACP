@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 
 import coinsCount.CoinCount;
 import coinsCount.CoinCountReport;
-import coinsCount.coinManagment;
 import customers.CustomerList;
 import employees.EmployeesList;
 import login.Login;
 import transaction.Transaction;
 import transaction.TransactionReports;
+import transaction.sandoukFilter;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -57,8 +57,7 @@ public class Home {
 		frmHome = new JFrame();
 		frmHome.setIconImage(Toolkit.getDefaultToolkit().getImage(CustomerList.class.getResource("/chip.png")));
 		frmHome.setTitle("Home");
-		frmHome.setResizable(false);
-		frmHome.setBounds(100, 100, 723, 600);
+		frmHome.setBounds(100, 100, 1024, 662);
 		frmHome.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmHome.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -74,7 +73,7 @@ public class Home {
 		frmHome.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 900, 600);
+		panel.setBounds(0, 0, 1050, 600);
 		frmHome.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -87,7 +86,7 @@ public class Home {
 			}
 		}); 
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnNewButton.setBounds(138, 291, 258, 67);
+		btnNewButton.setBounds(138, 285, 380, 67);
 		panel.add(btnNewButton);
 		
 		JButton btnLogOut = new JButton("Log Out");
@@ -99,7 +98,7 @@ public class Home {
 			}
 		});
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnLogOut.setBounds(10, 488, 176, 55);
+		btnLogOut.setBounds(829, 397, 176, 55);
 		panel.add(btnLogOut);
 		
 		JButton btnCoinsCount = new JButton("Coins Count");
@@ -111,7 +110,7 @@ public class Home {
 			}
 		});
 		btnCoinsCount.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinsCount.setBounds(429, 191, 258, 67);
+		btnCoinsCount.setBounds(541, 191, 464, 67);
 		panel.add(btnCoinsCount);
 		
 		JButton btnManageEmployees = new JButton("Manage Employees");
@@ -123,7 +122,7 @@ public class Home {
 			}
 		});
 		btnManageEmployees.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnManageEmployees.setBounds(138, 391, 258, 67);
+		btnManageEmployees.setBounds(138, 391, 380, 67);
 		panel.add(btnManageEmployees);
 		
 		JButton btnTransaction = new JButton("Transaction");
@@ -135,7 +134,7 @@ public class Home {
 			}
 		});
 		btnTransaction.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnTransaction.setBounds(138, 191, 258, 67);
+		btnTransaction.setBounds(138, 191, 380, 67);
 		panel.add(btnTransaction);
 		
 		JButton btnCoinCountReports = new JButton("Coin Count Reports");
@@ -147,7 +146,7 @@ public class Home {
 			}
 		});
 		btnCoinCountReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinCountReports.setBounds(138, 17, 258, 67);
+		btnCoinCountReports.setBounds(138, 17, 380, 67);
 		panel.add(btnCoinCountReports);
 		
 		JButton btnTransactionReports = new JButton("Transaction Reports");
@@ -159,7 +158,7 @@ public class Home {
 			}
 		});
 		btnTransactionReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnTransactionReports.setBounds(429, 17, 258, 67);
+		btnTransactionReports.setBounds(543, 17, 462, 67);
 		panel.add(btnTransactionReports);
 		
 		JLabel lblReports = new JLabel("Reports:");
@@ -182,16 +181,16 @@ public class Home {
 		lblEmploees.setBounds(10, 391, 248, 55);
 		panel.add(lblEmploees);
 		
-		JButton btnCoinCountManagment = new JButton("Coin Count Managment");
-		btnCoinCountManagment.addActionListener(new ActionListener() {
+		JButton btnSandouk = new JButton("Sandouk");
+		btnSandouk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmHome.setVisible(false);
-				coinManagment object = new coinManagment();
-				object.frmCoinCountManagment.setVisible(true);
+				sandoukFilter object = new sandoukFilter();
+				object.frmSandoukFilter.setVisible(true);
 			}
 		});
-		btnCoinCountManagment.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinCountManagment.setBounds(138, 105, 549, 67);
-		panel.add(btnCoinCountManagment);
+		btnSandouk.setFont(new Font("Tahoma", Font.BOLD, 21));
+		btnSandouk.setBounds(297, 109, 549, 67);
+		panel.add(btnSandouk);
 	}
 }

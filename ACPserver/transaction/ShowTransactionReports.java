@@ -65,7 +65,7 @@ public class ShowTransactionReports {
 				Date date = rs.getDate("Date");
 				Time time = rs.getTime("Time");
 				int machNum = rs.getInt("MachineNum");
-				int cusId = rs.getInt("CustomerId");
+				String cusId = rs.getString("CustomerName");
 				double cashIn = rs.getDouble("CashIN");
 				double bonus = rs.getDouble("Bonus");
 				double cashOut = rs.getDouble("CashOut");
@@ -95,8 +95,7 @@ public class ShowTransactionReports {
 		frmTransactionReports = new JFrame();
 		frmTransactionReports.setIconImage(Toolkit.getDefaultToolkit().getImage(ShowTransactionReports.class.getResource("/chip.png")));
 		frmTransactionReports.setTitle("Transaction Reports");
-		frmTransactionReports.setResizable(false);
-		frmTransactionReports.setBounds(100, 100, 1050, 600);
+		frmTransactionReports.setBounds(100, 100, 1280, 600);
 		frmTransactionReports.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmTransactionReports.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -112,12 +111,12 @@ public class ShowTransactionReports {
 		frmTransactionReports.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1050, 600);
+		panel.setBounds(0, 0, 1274, 596);
 		frmTransactionReports.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 1017, 448);
+		scrollPane.setBounds(10, 11, 1254, 448);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -141,13 +140,13 @@ public class ShowTransactionReports {
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnNewButton.setIcon(new ImageIcon(ShowTransactionReports.class.getResource("/back.png")));
-		btnNewButton.setBounds(855, 470, 172, 67);
+		btnNewButton.setBounds(1092, 470, 172, 67);
 		panel.add(btnNewButton);
 		
 		btnDeleteTransaction = new JButton("Delete Transaction");
 		btnDeleteTransaction.setIcon(new ImageIcon(ShowTransactionReports.class.getResource("/icons8-cancel-48.png")));
 		btnDeleteTransaction.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnDeleteTransaction.setBounds(10, 470, 304, 67);
+		btnDeleteTransaction.setBounds(10, 483, 304, 67);
 		panel.add(btnDeleteTransaction);
 	}
 

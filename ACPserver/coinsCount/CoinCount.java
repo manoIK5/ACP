@@ -19,6 +19,8 @@ import databaseCon.DatabaseCon;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,7 +70,6 @@ public class CoinCount {
 		frmCoinCount = new JFrame();
 		frmCoinCount.setTitle("Coin Count");
 		frmCoinCount.setIconImage(Toolkit.getDefaultToolkit().getImage(CoinCount.class.getResource("/chip.png")));
-		frmCoinCount.setResizable(false);
 		frmCoinCount.setBounds(100, 100, 900, 600);
 		frmCoinCount.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmCoinCount.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -88,6 +89,8 @@ public class CoinCount {
 		panel.setBounds(0, 0, 900, 600);
 		frmCoinCount.getContentPane().add(panel);
 		panel.setLayout(null);
+		
+		JButton btnNewButton = new JButton("Submit"); // ads the button variable
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 21));
@@ -110,6 +113,7 @@ public class CoinCount {
 		machineNumInput.setBounds(232, 136, 158, 47);
 		panel.add(machineNumInput);
 		machineNumInput.setColumns(10);
+		machineNumInput.setText("1");
 		
 		JLabel lblInAmount = new JLabel("In Amount:");
 		lblInAmount.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -132,8 +136,14 @@ public class CoinCount {
 		outAmountInput.setColumns(10);
 		outAmountInput.setBounds(232, 359, 158, 47);
 		panel.add(outAmountInput);
+		outAmountInput.addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent e) {
+			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+			    	btnNewButton.doClick();
+			    }};		
+		});
 		
-		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
 				
@@ -169,6 +179,12 @@ public class CoinCount {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				int numReached = Integer.parseInt(machineNumInput.getText());
+				machineNumInput.setText(String.valueOf(numReached+1));
+				InAmountInput.setText("");
+				outAmountInput.setText("");
+				InAmountInput.requestFocus();
 				
 			}
 		});
