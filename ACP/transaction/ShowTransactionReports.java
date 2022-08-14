@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import databaseCon.DatabaseCon;
+import login.Login;
 
 import java.awt.Font;
 import javax.swing.JButton;
@@ -125,7 +126,7 @@ public class ShowTransactionReports {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 1254, 448);
+		scrollPane.setBounds(0, 0, 1264, 459);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -157,6 +158,11 @@ public class ShowTransactionReports {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
 				int id = (int) table.getValueAt(row, 0);
+				
+				String empName = Login.username;
+				double cashInT = (double) table.getValueAt(row, 5);
+				double cashOutT = (double) table.getValueAt(row, 7);
+				double bonusT = (double) table.getValueAt(row, 6);
 				 
 				try {
 					stmt = con.prepareStatement("DELETE FROM `transaction` WHERE `TransId` =?");
@@ -173,7 +179,20 @@ public class ShowTransactionReports {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-		
+				
+				// adding the deleted data to the deleted data table 
+				try {
+					stmt = con.prepareStatement("INSERT INTO `deleted` (`employeeName`, `cashIn`, `cashOut`, `bonus`) VALUES (?,?,?,?)");
+					stmt.setString(1, empName);
+					stmt.setDouble(2, cashInT);
+					stmt.setDouble(3, cashOutT);
+					stmt.setDouble(4, bonusT);
+					stmt.executeUpdate();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnDeleteTransaction.setIcon(new ImageIcon(ShowTransactionReports.class.getResource("/icons8-cancel-48.png")));

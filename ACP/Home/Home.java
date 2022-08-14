@@ -9,13 +9,10 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 import coinsCount.CoinCount;
-import coinsCount.CoinCountReport;
 import customers.CustomerList;
-import employees.EmployeesList;
 import login.Login;
 import transaction.Transaction;
 import transaction.TransactionReports;
-import transaction.sandoukFilter;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -86,7 +83,7 @@ public class Home {
 			}
 		}); 
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnNewButton.setBounds(138, 285, 380, 67);
+		btnNewButton.setBounds(138, 105, 380, 67);
 		panel.add(btnNewButton);
 		
 		JButton btnLogOut = new JButton("Log Out");
@@ -98,7 +95,7 @@ public class Home {
 			}
 		});
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnLogOut.setBounds(829, 502, 176, 55);
+		btnLogOut.setBounds(829, 397, 176, 55);
 		panel.add(btnLogOut);
 		
 		JButton btnCoinsCount = new JButton("Coins Count");
@@ -110,20 +107,8 @@ public class Home {
 			}
 		});
 		btnCoinsCount.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinsCount.setBounds(541, 191, 464, 67);
+		btnCoinsCount.setBounds(541, 11, 464, 67);
 		panel.add(btnCoinsCount);
-		
-		JButton btnManageEmployees = new JButton("Manage Employees");
-		btnManageEmployees.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmHome.setVisible(false);
-				EmployeesList object = new EmployeesList();
-				object.frmEmployeesList.setVisible(true);
-			}
-		});
-		btnManageEmployees.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnManageEmployees.setBounds(138, 391, 380, 67);
-		panel.add(btnManageEmployees);
 		
 		JButton btnTransaction = new JButton("Transaction");
 		btnTransaction.addActionListener(new ActionListener() {
@@ -134,20 +119,8 @@ public class Home {
 			}
 		});
 		btnTransaction.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnTransaction.setBounds(138, 191, 380, 67);
+		btnTransaction.setBounds(138, 11, 380, 67);
 		panel.add(btnTransaction);
-		
-		JButton btnCoinCountReports = new JButton("Coin Count Reports");
-		btnCoinCountReports.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmHome.setVisible(false);
-				CoinCountReport object = new CoinCountReport();
-				object.frmCoinCountReport.setVisible(true);
-			}
-		});
-		btnCoinCountReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinCountReports.setBounds(138, 17, 380, 67);
-		panel.add(btnCoinCountReports);
 		
 		JButton btnTransactionReports = new JButton("Transaction Reports");
 		btnTransactionReports.addActionListener(new ActionListener() {
@@ -158,51 +131,17 @@ public class Home {
 			}
 		});
 		btnTransactionReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnTransactionReports.setBounds(543, 17, 462, 67);
+		btnTransactionReports.setBounds(10, 391, 462, 67);
 		panel.add(btnTransactionReports);
-		
-		JLabel lblReports = new JLabel("Reports:");
-		lblReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblReports.setBounds(10, 23, 248, 55);
-		panel.add(lblReports);
 		
 		JLabel lblActions = new JLabel("Actions:");
 		lblActions.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblActions.setBounds(10, 191, 248, 55);
+		lblActions.setBounds(10, 11, 248, 55);
 		panel.add(lblActions);
 		
 		JLabel lblCustomers = new JLabel("Customers:");
 		lblCustomers.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblCustomers.setBounds(10, 291, 248, 55);
+		lblCustomers.setBounds(10, 111, 248, 55);
 		panel.add(lblCustomers);
-		
-		JLabel lblEmploees = new JLabel("Employees:");
-		lblEmploees.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblEmploees.setBounds(10, 391, 248, 55);
-		panel.add(lblEmploees);
-		
-		JButton btnSandouk = new JButton("Sandouk");
-		btnSandouk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmHome.setVisible(false);
-				sandoukFilter object = new sandoukFilter();
-				object.frmSandoukFilter.setVisible(true);
-			}
-		});
-		btnSandouk.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnSandouk.setBounds(297, 109, 549, 67);
-		panel.add(btnSandouk);
-		
-		JButton btnShowDeleted = new JButton("Show Deleted");
-		btnShowDeleted.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmHome.setVisible(false);
-				showDeleted object = new showDeleted();
-				object.frmShowDelted.setVisible(true);
-			}
-		});
-		btnShowDeleted.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnShowDeleted.setBounds(138, 496, 380, 67);
-		panel.add(btnShowDeleted);
 	}
 }
