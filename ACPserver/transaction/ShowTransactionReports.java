@@ -36,7 +36,7 @@ public class ShowTransactionReports {
 	static PreparedStatement stmt;
 	static ResultSet rs; 
 
-	/**
+	/** 
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -58,7 +58,7 @@ public class ShowTransactionReports {
 	public ShowTransactionReports() {
 		con = DatabaseCon.connection();
 		initialize();
-		getData();
+		getData(); 
 	}
 	
 //	getting the table data through this function `getData`

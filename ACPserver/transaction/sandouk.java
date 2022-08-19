@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import databaseCon.DatabaseCon;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -27,7 +32,13 @@ public class sandouk {
 	private JLabel tltCash;
 	private JButton btnNewButton;
 	private JButton btnBack;
-
+	
+	static Connection con;
+	static PreparedStatement stmt;
+	static ResultSet rs2; 
+	
+	double CGT = 0.00;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -39,22 +50,38 @@ public class sandouk {
 					window.frmSandouk.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				} 
 			}
 		});
-	}
+	} 
 
 	/**
 	 * Create the application.
 	 */
 	public sandouk() {
-		rs= sandoukFilter.rs;
+		rs = sandoukFilter.rs;
+		con = DatabaseCon.connection();
 		initialize();
+		getStartingCash();
 		getData();
 	}
 	
+	// the following function gets the cash given in the morning from the database
+	public void getStartingCash() {
+		try {
+			stmt = con.prepareStatement("SELECT * FROM `mrt` WHERE `date` between date_sub(curdate(),interval 0 day) and curdate()");
+			rs2 = stmt.executeQuery();
+			while(rs2.next()) {
+				CGT = rs2.getDouble("amountRecivied");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void getData() {
-		Double tltCashInSandouk = 0.00;
+		Double tltCashInSandouk = CGT;
 		try {
 			while(rs.next()) {
 				Double inamount = rs.getDouble("cashIn");

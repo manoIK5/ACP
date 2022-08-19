@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 
 import java.awt.Toolkit;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -31,16 +29,18 @@ public class CoinCount {
 
 	public JFrame frmCoinCount;
 	private JTextField machineNumInput;
-	private JTextField InAmountInput;
-	private JTextField outAmountInput;
+	private JTextField InAmountAmInput;
+	private JTextField outAmountAmInput;
 	
 	static Connection con;
 	static PreparedStatement stmt;
 	static ResultSet rs; 
+	private JTextField inAmountPmInput;
+	private JTextField outAmountPmInput;
 
 	/**
 	 * Launch the application.
-	 */
+	 */ 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,7 +48,7 @@ public class CoinCount {
 					CoinCount window = new CoinCount();
 					window.frmCoinCount.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); 
 				}
 			}
 		});
@@ -65,7 +65,6 @@ public class CoinCount {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frmCoinCount = new JFrame();
 		frmCoinCount.setTitle("Coin Count");
@@ -90,13 +89,7 @@ public class CoinCount {
 		frmCoinCount.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Submit"); // ads the button variable
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"AM", "PM"}));
-		comboBox.setBounds(232, 35, 76, 47);
-		panel.add(comboBox);
+		JButton btnNewButton = new JButton("Submit");
 		
 		JLabel lblNewLabel = new JLabel("Shift:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -125,18 +118,18 @@ public class CoinCount {
 		lblOutAmount.setBounds(36, 359, 195, 58);
 		panel.add(lblOutAmount);
 		
-		InAmountInput = new JTextField();
-		InAmountInput.setFont(new Font("Tahoma", Font.BOLD, 21));
-		InAmountInput.setColumns(10);
-		InAmountInput.setBounds(232, 255, 158, 47);
-		panel.add(InAmountInput);
+		InAmountAmInput = new JTextField();
+		InAmountAmInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		InAmountAmInput.setColumns(10);
+		InAmountAmInput.setBounds(232, 255, 158, 47);
+		panel.add(InAmountAmInput);
 		
-		outAmountInput = new JTextField();
-		outAmountInput.setFont(new Font("Tahoma", Font.BOLD, 21));
-		outAmountInput.setColumns(10);
-		outAmountInput.setBounds(232, 359, 158, 47);
-		panel.add(outAmountInput);
-		outAmountInput.addKeyListener(new KeyAdapter() {
+		outAmountAmInput = new JTextField();
+		outAmountAmInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		outAmountAmInput.setColumns(10);
+		outAmountAmInput.setBounds(232, 359, 158, 47);
+		panel.add(outAmountAmInput);
+		outAmountAmInput.addKeyListener(new KeyAdapter() {
 			
 			public void keyPressed(KeyEvent e) {
 			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
@@ -151,29 +144,63 @@ public class CoinCount {
 				Double outAmount;
 				 
 				try {
-					stmt = con.prepareStatement("INSERT INTO `coincount`(`AM/PM`, `Machine-num`, `InAmount`, `OutAmount`) VALUES (?, ?, ?, ?)");
-					stmt.setString(1, (String) comboBox.getSelectedItem());
-					stmt.setInt(2, Integer.parseInt(machineNumInput.getText()));
 					
-					
-					if (InAmountInput.getText().equals("")) {
-						inAmount = 0.00;
-					} else {
-						inAmount = Double.parseDouble(InAmountInput.getText());
+//					checks if the am inputs are null, if not it puts them into the database
+					if( !(InAmountAmInput.getText().equals("") && outAmountAmInput.getText().equals("") )) {
+						stmt = con.prepareStatement("INSERT INTO `coincount`(`AM/PM`, `Machine-num`, `InAmount`, `OutAmount`) VALUES (?, ?, ?, ?)");
+						stmt.setString(1, "AM");
+						stmt.setInt(2, Integer.parseInt(machineNumInput.getText()));
+						
+						
+						if (InAmountAmInput.getText().equals("")) {
+							inAmount = 0.00;
+						} else {
+							inAmount = Double.parseDouble(InAmountAmInput.getText());
+						}
+						
+						if (outAmountAmInput.getText().equals("")) {
+							outAmount = 0.00;
+						} else {
+							outAmount = Double.parseDouble(outAmountAmInput.getText());
+						}
+						
+						stmt.setDouble(3, inAmount);
+						stmt.setDouble(4, outAmount);
+						
+//						Inserting the data
+						stmt.executeUpdate();
+						stmt.close();
+					} 
+//					checks if the pm inputs are null, if not it puts them in the database
+					if( !(inAmountPmInput.getText().equals("") && outAmountPmInput.getText().equals("")) ) {
+						stmt = con.prepareStatement("INSERT INTO `coincount`(`AM/PM`, `Machine-num`, `InAmount`, `OutAmount`) VALUES (?, ?, ?, ?)");
+						stmt.setString(1, "PM");
+						stmt.setInt(2, Integer.parseInt(machineNumInput.getText()));
+						
+						
+						if (inAmountPmInput.getText().equals("")) {
+							inAmount = 0.00;
+						} else {
+							inAmount = Double.parseDouble(inAmountPmInput.getText());
+						}
+						
+						if (outAmountPmInput.getText().equals("")) {
+							outAmount = 0.00;
+						} else {
+							outAmount = Double.parseDouble(outAmountPmInput.getText());
+						}
+						
+						stmt.setDouble(3, inAmount);
+						stmt.setDouble(4, outAmount);
+						
+//						Inserting the data
+						stmt.executeUpdate();
+						stmt.close();
 					}
-					
-					if (outAmountInput.getText().equals("")) {
-						outAmount = 0.00;
-					} else {
-						outAmount = Double.parseDouble(outAmountInput.getText());
-					}
-					
-					stmt.setDouble(3, inAmount);
-					stmt.setDouble(4, outAmount);
-					
-//					Inserting the data
-					stmt.executeUpdate();
+							
 					JOptionPane.showMessageDialog(null, "Data insertion is succesful");
+
+					
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -182,9 +209,11 @@ public class CoinCount {
 				
 				int numReached = Integer.parseInt(machineNumInput.getText());
 				machineNumInput.setText(String.valueOf(numReached+1));
-				InAmountInput.setText("");
-				outAmountInput.setText("");
-				InAmountInput.requestFocus();
+				InAmountAmInput.setText("");
+				outAmountAmInput.setText("");
+				inAmountPmInput.setText("");
+				outAmountPmInput.setText("");
+				InAmountAmInput.requestFocus();
 				
 			}
 		});
@@ -205,5 +234,27 @@ public class CoinCount {
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnBack.setBounds(565, 451, 251, 58);
 		panel.add(btnBack);
+		
+		JLabel lblAm = new JLabel("AM");
+		lblAm.setFont(new Font("Tahoma", Font.BOLD, 21));
+		lblAm.setBounds(231, 29, 175, 58);
+		panel.add(lblAm);
+		
+		JLabel lblPm = new JLabel("PM");
+		lblPm.setFont(new Font("Tahoma", Font.BOLD, 21));
+		lblPm.setBounds(544, 29, 175, 58);
+		panel.add(lblPm);
+		
+		inAmountPmInput = new JTextField();
+		inAmountPmInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		inAmountPmInput.setColumns(10);
+		inAmountPmInput.setBounds(531, 255, 158, 47);
+		panel.add(inAmountPmInput);
+		
+		outAmountPmInput = new JTextField();
+		outAmountPmInput.setFont(new Font("Tahoma", Font.BOLD, 21));
+		outAmountPmInput.setColumns(10);
+		outAmountPmInput.setBounds(531, 359, 158, 47);
+		panel.add(outAmountPmInput);
 	}
 }

@@ -10,9 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
 
 import Home.Home;
 import databaseCon.DatabaseCon;
@@ -28,10 +25,9 @@ import java.awt.event.ActionEvent;
 public class CoinCountReport {
 
 	public JFrame frmCoinCountReport;
-	private JTextField machNumInput;
 	
 	static Connection con;
-	static PreparedStatement stmt;
+	public static PreparedStatement stmt;
 	public static ResultSet rs; 
 	
 	static String dateSpecified = "";
@@ -48,7 +44,7 @@ public class CoinCountReport {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			} 
 		});
 	}
 
@@ -63,7 +59,7 @@ public class CoinCountReport {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	private void initialize() {
 		frmCoinCountReport = new JFrame();
 		frmCoinCountReport.setIconImage(Toolkit.getDefaultToolkit().getImage(CoinCountReport.class.getResource("/chip.png")));
@@ -90,7 +86,7 @@ public class CoinCountReport {
 		
 		JLabel lblNewLabel = new JLabel("Filter Coin Count Reorts By Date:\r\n");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblNewLabel.setBounds(10, 11, 361, 52);
+		lblNewLabel.setBounds(10, 11, 361, 52); 
 		panel.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Today:");
@@ -143,91 +139,18 @@ public class CoinCountReport {
 		btnAllData.setBounds(577, 166, 276, 52);
 		panel.add(btnAllData);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"All", "AM", "PM"}));
-		comboBox.setFont(new Font("Tahoma", Font.BOLD, 21));
-		comboBox.setBounds(409, 267, 113, 46);
-		panel.add(comboBox);
-		
-		machNumInput = new JTextField();
-		machNumInput.setFont(new Font("Tahoma", Font.BOLD, 21));
-		machNumInput.setBounds(512, 353, 307, 52);
-		panel.add(machNumInput);
-		machNumInput.setColumns(10);
-		
-		JLabel lblFilterCoinCount = new JLabel("Filter Coin Count Reorts By Shift:");
-		lblFilterCoinCount.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblFilterCoinCount.setBounds(10, 264, 361, 52);
-		panel.add(lblFilterCoinCount);
-		
-		JLabel lblFilterCoinCount_2 = new JLabel("Filter Coin Count Reorts By Machine Number:");
-		lblFilterCoinCount_2.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblFilterCoinCount_2.setBounds(10, 353, 512, 52);
-		panel.add(lblFilterCoinCount_2);
-		
 		JButton btnGetData = new JButton("Get Data");
 		btnGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-//					checks for the date
 					if(dateSpecified.equals("all")) {
-						stmt = con.prepareStatement("SELECT * FROM `coincount`");
-						// checks for the date
-						if(comboBox.getSelectedItem().equals("All")) {
-							stmt = con.prepareStatement("SELECT * FROM `coincount`");
-//							checks for the machine number		
-							if(machNumInput.getText().equals("")) {
-								stmt = con.prepareStatement("SELECT * FROM `coincount`");
-//							third else AKA machine number else
-							} else {
-								stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Machine-num` = ?");
-								stmt.setInt(1, Integer.parseInt(machNumInput.getText()));
-							}
-							
-						// Second else AKA as shift else
-						} else {
-							if(machNumInput.getText().equals("")) {
-								stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `AM/PM` = ?");
-								stmt.setString(1, (String) comboBox.getSelectedItem());
-							} else {
-								stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Machine-num` = ? && `AM/PM` = ?");
-								stmt.setInt(1, Integer.parseInt(machNumInput.getText()));
-								stmt.setString(2, (String) comboBox.getSelectedItem());
-							}
-						}
-						
-					// the following else is the first else AKA the time else
+						stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE 1");
 					} else {
-							if((comboBox.getSelectedItem().equals("All"))) {
-								if(machNumInput.getText().equals("")) {
-									stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Date` " + dateSpecified);
-									System.out.println(stmt);
-								} else {
-									stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Date` " + dateSpecified + " && `Machine-num` = ?");
-									stmt.setInt(1, Integer.parseInt(machNumInput.getText()));
-								}
-							} else {
-								if (machNumInput.getText().equals("")) {
-									stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Date` " + dateSpecified + " && `AM/PM` = ?");
-									stmt.setString(1, (String) comboBox.getSelectedItem());
-									System.out.println(stmt);
-								} else {
-									stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Date` " + dateSpecified + " && `AM/PM` = ? && `Machine-num` = ?");
-									stmt.setString(1, (String) comboBox.getSelectedItem());
-									stmt.setInt(2, Integer.parseInt(machNumInput.getText()));
-									System.out.println(stmt);
-								}
-							}
+						stmt = con.prepareStatement("SELECT * FROM `coincount` WHERE `Date` " + dateSpecified);
 					}
 					
 					rs = stmt.executeQuery();
-//					while(rs.next()) {
-//						System.out.println(rs.getDate("Date"));
-//						System.out.println(rs.getString("AM/PM"));
-//						System.out.println(rs.getInt("Machine-num"));
-//					}
-//					System.out.println("ENDDDDDDDDDDDDDDDDDD");
 					
 					frmCoinCountReport.setVisible(false);
 					showCoinCountReport object = new showCoinCountReport();

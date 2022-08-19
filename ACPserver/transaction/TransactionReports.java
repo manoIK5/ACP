@@ -51,8 +51,8 @@ public class TransactionReports {
 
 	/**
 	 * Create the application.
-	 */
-	public TransactionReports() {
+	 */ 
+	public TransactionReports() { 
 		con = DatabaseCon.connection();
 		initialize();
 	}

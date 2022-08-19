@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 
-import coinsCount.CoinCount;
 import customers.CustomerList;
+import databaseCon.DatabaseCon;
 import login.Login;
 import transaction.Transaction;
 import transaction.TransactionReports;
@@ -17,12 +17,24 @@ import transaction.TransactionReports;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class Home {
 
 	public JFrame frmHome;
+	private JTextField textField;
+	
+	static Connection con;
+	static PreparedStatement stmt;
+	static ResultSet rs; 
 
 	/**
 	 * Launch the application.
@@ -44,6 +56,7 @@ public class Home {
 	 * Create the application.
 	 */
 	public Home() {	
+		con = DatabaseCon.connection();
 		initialize();
 	}
 
@@ -98,18 +111,6 @@ public class Home {
 		btnLogOut.setBounds(829, 397, 176, 55);
 		panel.add(btnLogOut);
 		
-		JButton btnCoinsCount = new JButton("Coins Count");
-		btnCoinsCount.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmHome.setVisible(false);
-				CoinCount coinCount1 = new CoinCount();
-				coinCount1.frmCoinCount.setVisible(true);
-			}
-		});
-		btnCoinsCount.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnCoinsCount.setBounds(541, 11, 464, 67);
-		panel.add(btnCoinsCount);
-		
 		JButton btnTransaction = new JButton("Transaction");
 		btnTransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +132,7 @@ public class Home {
 			}
 		});
 		btnTransactionReports.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnTransactionReports.setBounds(10, 391, 462, 67);
+		btnTransactionReports.setBounds(10, 221, 462, 67);
 		panel.add(btnTransactionReports);
 		
 		JLabel lblActions = new JLabel("Actions:");
@@ -143,5 +144,38 @@ public class Home {
 		lblCustomers.setFont(new Font("Tahoma", Font.BOLD, 21));
 		lblCustomers.setBounds(10, 111, 248, 55);
 		panel.add(lblCustomers);
+		
+		JLabel lblMoneyRecievedToday = new JLabel("Money recieved today:");
+		lblMoneyRecievedToday.setFont(new Font("Tahoma", Font.BOLD, 21));
+		lblMoneyRecievedToday.setBounds(10, 323, 276, 67);
+		panel.add(lblMoneyRecievedToday);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.BOLD, 18));
+		textField.setBounds(250, 334, 268, 52);
+		panel.add(textField);
+		textField.setColumns(10);
+		textField.addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent e) {
+			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+			    	if(Double.parseDouble(textField.getText()) <0) {
+						JOptionPane.showMessageDialog(null, "Cannot insert negative number");
+			    	} else {
+			    		try {
+							stmt = con.prepareStatement("INSERT INTO `mrt`(`amountRecivied`) VALUES (?)");
+							stmt.setDouble(1, Double.parseDouble(textField.getText()));
+							stmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						JOptionPane.showMessageDialog(null, "Data Insertion succesfull");
+						textField.setText("");
+			    	}
+			    	
+
+			    }};		
+		});
 	}
 }

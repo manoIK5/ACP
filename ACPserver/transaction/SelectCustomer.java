@@ -60,7 +60,7 @@ public class SelectCustomer {
 			}
 		});
 	}
-	
+	 
 	// function that gets the data
 	private void getData() {
 		try {
@@ -86,7 +86,7 @@ public class SelectCustomer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	// the following function gets the search results of the search input

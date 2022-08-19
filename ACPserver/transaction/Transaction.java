@@ -11,12 +11,17 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
+import java.util.TreeSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+
 
 import Home.Home;
 import databaseCon.DatabaseCon;
@@ -35,7 +40,7 @@ public class Transaction {
 	private JTextField PrizeInput;
 	private JTextField welcomeInput;
 	
-	
+	 
 	static Connection con;
 	static PreparedStatement stmt;
 	static ResultSet rs; 
@@ -45,8 +50,10 @@ public class Transaction {
 	
 	private JTextField cusNameInput;
 	
-	double tempBounus = 0.00;
+	double tempBounus = 0.00; 
 	private JTextField bonusInput;
+	
+	Set<String> s;
 
 	/**
 	 * Launch the application.
@@ -70,50 +77,30 @@ public class Transaction {
 	public Transaction() {
 		con = DatabaseCon.connection();
 		initialize();
+		
+		// the search assistant
+		s = new TreeSet<String>();
+		getCusNames();
 	}
 	
-	
-//	private void checkCustomerBalance(String cusName) {
-//		double customerBalance = 0.00;
-//		double bonus = 0.00;
-//		try {
-//			stmt2 = con.prepareStatement("SELECT * FROM `transaction` WHERE `CustomerName` = ? && `Date` between date_sub(curdate(),interval 0 day) and curdate()");
-//			stmt2.setString(1, cusName);
-//			rs2 = stmt2.executeQuery();
-//			
-//			while(rs2.next()) {
-//				customerBalance = rs2.getDouble("balance");
-//				bonus = rs2.getDouble("bonus");
-//			}
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		if(bonus > 15000) {
-//			tempBounus = 0.00;
-//		} else {
-//			if(customerBalance == -50000) {
-//				tempBounus = 5000;
-//			} else if(customerBalance == -100000) {
-//				tempBounus = 10000;
-//			} else if(customerBalance == -150000) {
-//				tempBounus = 15000;
-//			}
-//		}		
-//		
-//		try {
-//			stmt2 = con.prepareStatement("INSERT INTO `transaction` ('Bonus') VALUES (?) WHERE `CustomerName` = ? && `Date` between date_sub(curdate(),interval 0 day) and curdate()");
-//			stmt.setDouble(1, tempBounus);
-//			stmt.setString(1, cusName);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
+	// gets the customers name and adds them to the Sting that the search assistant gets them from
+	public void getCusNames() {
+		try {
+			stmt = con.prepareStatement("SELECT * FROM `customer`");
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				String Items = rs.getString("First Name");
+				s.add(Items);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 	/**
@@ -241,43 +228,43 @@ public class Transaction {
 					if (cashInInput.getText().equals("")) {
 						stmt.setDouble(3, 0.00);
 					} else {
-						stmt.setDouble(3, Double.parseDouble(cashInInput.getText()));
+						stmt.setDouble(3, Double.parseDouble(cashInInput.getText()+"000"));
 					}
 					
 					if (cashOutInput.getText().equals("")) {
 						stmt.setDouble(4, 0.00);
 					} else {
-						stmt.setDouble(4, Double.parseDouble(cashOutInput.getText()));
+						stmt.setDouble(4, Double.parseDouble(cashOutInput.getText()+"000"));
 					}
 					
 					if (extraBounusInput.getText().equals("")) {
 						stmt.setDouble(5, 0.00);
 					} else {
-						stmt.setDouble(5, Double.parseDouble(extraBounusInput.getText())); 
+						stmt.setDouble(5, Double.parseDouble(extraBounusInput.getText()+"000")); 
 					}
 					
 					if (FraisInput.getText().equals("")) {
 						stmt.setDouble(6, 0.00);
 					} else {
-						stmt.setDouble(6, Double.parseDouble(FraisInput.getText()));
+						stmt.setDouble(6, Double.parseDouble(FraisInput.getText()+"000"));
 					}
 					
 					if (PrizeInput.getText().equals("")) {
 						stmt.setDouble(7, 0.00);
 					} else {
-						stmt.setDouble(7, Double.parseDouble(PrizeInput.getText()));
+						stmt.setDouble(7, Double.parseDouble(PrizeInput.getText()+"000"));
 					}
 					
 					if (welcomeInput.getText().equals("")) {
 						stmt.setDouble(8, 0.00);
 					} else {
-						stmt.setDouble(8, Double.parseDouble(welcomeInput.getText()));
+						stmt.setDouble(8, Double.parseDouble(welcomeInput.getText()+"000"));
 					}
 					
 					if(bonusInput.getText().equals("")) {
 						stmt.setDouble(9, 0.00);
 					} else {
-						stmt.setDouble(9, Double.parseDouble(bonusInput.getText()));
+						stmt.setDouble(9, Double.parseDouble(bonusInput.getText()+"000"));
 					}
 							
 					stmt.executeUpdate();
@@ -315,6 +302,29 @@ public class Transaction {
 		cusNameInput.setColumns(10);
 		cusNameInput.setBounds(221, 106, 347, 49);
 		panel.add(cusNameInput);
+		cusNameInput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				String to_check = cusNameInput.getText();
+				int to_check_len = to_check.length();
+				
+				for (String data:s) {
+					String check_from_data = "";
+					
+					for(int i=0;i<to_check_len;i++) {
+						if (to_check_len<=data.length()) {
+							check_from_data = check_from_data+data.charAt(i);
+						}
+					}
+				if (check_from_data.equals(to_check)) {
+					cusNameInput.setText(data);
+					cusNameInput.setSelectionStart(to_check_len);	
+					cusNameInput.setSelectionEnd(data.length());
+					break;
+				}
+				}
+			}
+		});	
 		
 		bonusInput = new JTextField();
 		bonusInput.setFont(new Font("Tahoma", Font.PLAIN, 21));
